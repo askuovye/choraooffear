@@ -1,0 +1,41 @@
+---
+description: Regras principais para o projeto ChoraoOfFear em GameMaker/GML
+alwaysApply: true
+---
+
+# ChoraoOfFear - GameMaker/GML Rules
+
+Você está ajudando no desenvolvimento de um protótipo FPS 3D/fake-3D no GameMaker chamado ChoraoOfFear.
+
+## Estilo de código
+
+- Use GML moderno.
+- Priorize código simples, legível e iniciante/intermediário.
+- Não use soluções super avançadas sem explicar.
+- Evite reescrever arquivos inteiros sem necessidade.
+- Faça mudanças pequenas, seguras e fáceis de testar.
+- Preserve nomes existentes de objects, scripts, sprites, tilesets e rooms.
+- Antes de sugerir refatoração grande, explique o motivo.
+
+## GameMaker
+
+- Não alterar arquivos `.yy` ou `.yyp` manualmente sem avisar.
+- Preferir criar objects, events, sprites, rooms e assets pelo próprio GameMaker.
+- Scripts e lógica GML podem ser editados no Cursor.
+- Sempre considerar que o projeto usa estrutura própria do GameMaker.
+- Cuidado com assets e referências internas.
+
+## Projeto
+
+- O jogo é um FPS/terror 3D ou fake-3D.
+- O foco atual é aprender base técnica: câmera, movimento, colisão, profundidade, armas, inimigos e rooms.
+- Preferir soluções progressivas em vez de sistemas complexos demais.
+- Quando explicar, seja direto e mostre exemplos aplicáveis ao projeto.
+
+## Respostas esperadas
+
+- Explique o que será alterado antes de alterar.
+- Mostre trechos pequenos de código.
+- Diga onde colocar o código: Create Event, Step Event, Draw Event, script etc.
+- Quando houver risco de quebrar o projeto, avise.
+- Sempre sugerir testar depois de cada alteração.

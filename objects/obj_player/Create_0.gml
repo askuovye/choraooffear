@@ -17,3 +17,13 @@ sens_y = 0.2;
 sens_x = 0.2;
 
 window_mouse_set_locked(true);
+
+// movimento sexy
+move_speed = 2;
+move_x = 0;
+move_y = 0;
+
+// armado e preparado
+gun = instance_create_depth(0, 0, 0, obj_gun);
+shoot_interval = 40;
+shoot_time = 0;

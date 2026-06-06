@@ -16,5 +16,16 @@
     {"name":"Tile Sets","order":2,"path":"folders/Tile Sets.yy",},
     {"name":"Timelines","order":8,"path":"folders/Timelines.yy",},
   ],
-  "ResourceOrderSettings": [],
+  "ResourceOrderSettings": [
+    {"name":"obj_flower","order":2,"path":"objects/obj_flower/obj_flower.yy",},
+    {"name":"spr_gun_shoot","order":5,"path":"sprites/spr_gun_shoot/spr_gun_shoot.yy",},
+    {"name":"obj_bullet","order":5,"path":"objects/obj_bullet/obj_bullet.yy",},
+    {"name":"obj_gun","order":4,"path":"objects/obj_gun/obj_gun.yy",},
+    {"name":"spr_wall","order":2,"path":"sprites/spr_wall/spr_wall.yy",},
+    {"name":"spr_flower","order":1,"path":"sprites/spr_flower/spr_flower.yy",},
+    {"name":"obj_3d","order":1,"path":"objects/obj_3d/obj_3d.yy",},
+    {"name":"obj_wall","order":3,"path":"objects/obj_wall/obj_wall.yy",},
+    {"name":"spr_playercolisionmask","order":3,"path":"sprites/spr_playercolisionmask/spr_playercolisionmask.yy",},
+    {"name":"spr_gun","order":4,"path":"sprites/spr_gun/spr_gun.yy",},
+  ],
 }

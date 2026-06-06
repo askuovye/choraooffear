@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-draw_clear(c_black);
+draw_clear(global.fog_colour);
 
 var _ztilt = lengthdir_y(1, tilt);
 

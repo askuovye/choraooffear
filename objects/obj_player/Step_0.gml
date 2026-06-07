@@ -1,13 +1,8 @@
-/// @description Insert description here
-// You can write your code in this editor
+if (!instance_exists(obj_cam)) {
+    exit;
+}
 
-var _mx = window_mouse_get_delta_x();
-var _my = window_mouse_get_delta_y();
-
-direction -= _mx * sens_x;
-tilt += _my * sens_y;
-
-tilt = clamp(tilt, -80, 80);
+var _direction = obj_cam.direction;
 
 // movimento sexo
 var _hor = real(keyboard_check(ord("D"))) - real(keyboard_check(ord("A")));
@@ -18,8 +13,8 @@ if (keyboard_check(vk_shift)) {
     _ver *= 2;
 }
 
-var _foward_dir = direction;
-var _side_dir = direction-90;
+var _foward_dir = _direction;
+var _side_dir = _direction - 90;
 
 var _move_x = lengthdir_x(_ver * move_speed, _foward_dir) + lengthdir_x(_hor * move_speed, _side_dir);
 var _move_y = lengthdir_y(_ver * move_speed, _foward_dir) + lengthdir_y(_hor * move_speed, _side_dir);
@@ -45,7 +40,7 @@ if (mouse_check_button(mb_left) && shoot_time <= 0) {
 
     instance_create_depth(x, y, 0, obj_bullet, {
         speed: 20,
-        direction: direction,
+        direction: _direction,
     })
 }
 if (shoot_time > 0) {
@@ -55,5 +50,3 @@ if (shoot_time > 0) {
 if (keyboard_check(vk_escape)) {
     game_end();
 }
-
-

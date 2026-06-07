@@ -25,6 +25,7 @@
     {"name":"spr_flower","order":1,"path":"sprites/spr_flower/spr_flower.yy",},
     {"name":"obj_3d","order":1,"path":"objects/obj_3d/obj_3d.yy",},
     {"name":"obj_wall","order":3,"path":"objects/obj_wall/obj_wall.yy",},
+    {"name":"obj_cam","order":6,"path":"objects/obj_cam/obj_cam.yy",},
     {"name":"spr_playercolisionmask","order":3,"path":"sprites/spr_playercolisionmask/spr_playercolisionmask.yy",},
     {"name":"spr_gun","order":4,"path":"sprites/spr_gun/spr_gun.yy",},
   ],

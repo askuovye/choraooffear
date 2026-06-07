@@ -27,3 +27,46 @@ offset_x += shift_x;
 offset_y += shift_y;
 
 
+//CHUMBO GROSSO
+if (mouse_check_button(mb_left) && shoot_time <= 0) {
+    
+    if (!instance_exists(obj_cam)) {
+        exit;
+    }
+
+    var _cam = instance_find(obj_cam, 0);
+
+    var _range = 1000;
+
+    var _x1 = _cam.cam_x;
+    var _y1 = _cam.cam_y;
+    var _z1 = _cam.cam_z;
+
+    var _x2 = _x1 + _cam.look_x * _range;
+    var _y2 = _y1 + _cam.look_y * _range;
+    var _z2 = _z1 + _cam.look_z * _range;
+
+    shoot();
+    shoot_time = shoot_interval;
+
+    var _tr = instance_create_layer(0, 0, "Instances", obj_bullet);
+
+    _tr.x1 = _x1;
+    _tr.y1 = _y1;
+    _tr.z1 = _z1;
+
+    _tr.x2 = _x2;
+    _tr.y2 = _y2;
+    _tr.z2 = _z2;
+
+    _tr.col = c_yellow;
+
+    show_debug_message("SHOT START:");
+    show_debug_message(string(_x1) + ", " + string(_y1) + ", " + string(_z1));
+
+    show_debug_message("SHOT END:");
+    show_debug_message(string(_x2) + ", " + string(_y2) + ", " + string(_z2));
+}   
+if (shoot_time > 0) {
+        shoot_time--;
+}

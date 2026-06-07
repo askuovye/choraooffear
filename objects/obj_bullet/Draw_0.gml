@@ -1,12 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
+var _alpha = life / max_life;
 
-gpu_set_depth(obj_player.z-8);
-
-draw_line_width(xprevious, yprevious, x, y, 1);
-
-
-
-gpu_set_depth(0);
-
-
+draw_line_3d(x1, y1, z1, x2, y2, z2, col, _alpha);

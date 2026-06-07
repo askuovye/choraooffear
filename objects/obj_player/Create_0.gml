@@ -12,5 +12,4 @@ if (!instance_exists(obj_cam)) {
 
 // armado e preparado
 gun = instance_create_depth(0, 0, 0, obj_gun);
-shoot_interval = 40;
-shoot_time = 0;
+

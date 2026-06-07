@@ -3,6 +3,8 @@
 
 sprite_idle = spr_gun;
 sprite_shoot = spr_gun_shoot;
+shoot_interval = 40;
+shoot_time = 0;
 
 offset_x = 0;
 offset_y = 0;

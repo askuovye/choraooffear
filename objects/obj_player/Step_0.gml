@@ -33,19 +33,6 @@ if (abs(_move_y) < abs(move_y)) {
 
 move_and_collide(move_x, move_y, [obj_wall]);
 
-// Chumbo grosso
-if (mouse_check_button(mb_left) && shoot_time <= 0) {
-    gun.shoot();
-    shoot_time = shoot_interval;
-
-    instance_create_depth(x, y, 0, obj_bullet, {
-        speed: 20,
-        direction: _direction,
-    })
-}
-if (shoot_time > 0) {
-    shoot_time--;
-}
 // Sair do jogasso
 if (keyboard_check(vk_escape)) {
     game_end();

@@ -1,19 +1,36 @@
-/// @description Insert description here
-// You can write your code in this editor
-cam = camera_create_view(0, 0, global.res_w, global.res_h);
-view_enabled = true;
-view_visible[0] = true;
-view_camera[0] = cam;
+camera_height = 24;
+z = camera_height;
 
-proj_mat = matrix_build_projection_perspective_fov(80, -global.res_w / global.res_h, 3, 3000);
-camera_set_proj_mat(cam, proj_mat);
+// movimento sexy
+move_speed = 2;
+move_x = 0;
+move_y = 0;
 
-view_mat = [];
-z = 24;
-direction = 0;
-tilt = 0;
+sens_x = 0.1;
+sens_y = 0.1;
 
-sens_y = 0.2;
-sens_x = 0.2;
+zspd = 0;
+grav = -0.3;
 
-window_mouse_set_locked(true);
+jump_speed = 7;
+jump_frames = 15;
+jump_timer = 0;
+
+_foot_z = z - camera_height;
+ground_z = camera_height;
+on_ground = true;
+
+camera_height = 24;
+player_height = 48;
+player_radius = 5;
+
+step_height = 12; 
+
+// câmera separada (cria só se não existir na room)
+if (!instance_exists(obj_cam)) {
+    instance_create_depth(0, 0, 0, obj_cam);
+}
+
+// armado e preparado
+gun = instance_create_depth(0, 0, 0, obj_gun);
+

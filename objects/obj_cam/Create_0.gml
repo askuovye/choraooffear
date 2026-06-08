@@ -29,3 +29,5 @@ look_at_y = 0;
 look_at_z = 0;
 
 window_mouse_set_locked(true);
+// bobbing timer used by Step event
+bob_timer = 0;

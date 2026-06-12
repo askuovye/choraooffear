@@ -67,8 +67,13 @@ if (!_grounded) {
 cam_jump_bob_z = lerp(cam_jump_bob_z, cam_jump_bob_target_z, 0.12);
 
 
-if (_grounded && !was_grounded) {
-    landing_impact = -0.3;
+// guardar velocidade vertical anterior
+var _prev_zspd = last_zspd;
+last_zspd = obj_player.zspd;
+
+// impacto ao aterrissar somente se caiu de verdade
+if (_grounded && !was_grounded && _prev_zspd < -9) {
+    landing_impact = -0.7;
 }
 
 was_grounded = _grounded;

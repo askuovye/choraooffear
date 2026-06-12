@@ -33,7 +33,7 @@ window_mouse_set_locked(true);
 bob_timer = 0;
 cam_bob_z = 0;
 cam_bob_target_z = 0;
-
+last_zspd = 0;
 cam_jump_bob_z = 0;
 cam_jump_bob_target_z = 0;
 

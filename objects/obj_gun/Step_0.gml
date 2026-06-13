@@ -9,6 +9,7 @@ var _spd = point_distance(0, 0, obj_player.move_x, obj_player.move_y) / obj_play
 var _sinewave = sin(current_time / 100);
 var _offset_x = _sinewave * _spd * 10;
 
+
 _sinewave = sin(current_time / 50);
 var _offset_y = _sinewave * _spd * 10;
 
@@ -20,15 +21,21 @@ offset_y = lerp(offset_y, _offset_y, 0.2);
 var _shift_x = window_mouse_get_delta_x() * -2;
 var _shift_y = window_mouse_get_delta_y() * -1;
 
+
 shift_x = lerp(shift_x, _shift_x, 0.05);
 shift_y = lerp(shift_y, _shift_y, 0.05);
 
-offset_x += shift_x;
-offset_y += shift_y;
+recoil_x = lerp(recoil_x, 0, 0.18);
+recoil_y = lerp(recoil_y, 0, 0.18);
+recoil_angle = lerp(recoil_angle, 0, 0.16);
+
+offset_x += shift_x + recoil_x;
+offset_y += shift_y + recoil_y;
+offset_angle = recoil_angle;
 
 
 //CHUMBO GROSSO
-if (mouse_check_button(mb_left) && shoot_time <= 0) {
+if (mouse_check_button(mb_left) && shoot_time <= 0 && ammo > 0 && reloading_time <= 0) {
     
     if (!instance_exists(obj_cam)) {
         exit;
@@ -48,6 +55,11 @@ if (mouse_check_button(mb_left) && shoot_time <= 0) {
 
     shoot();
     shoot_time = shoot_interval;
+    ammo--;
+
+    recoil_x += random_range(-2, 2);
+    recoil_y += 12;
+    recoil_angle += random_range(-4, 4);   
 
     var _tr = instance_create_layer(0, 0, "Instances", obj_bullet);
 
@@ -61,12 +73,21 @@ if (mouse_check_button(mb_left) && shoot_time <= 0) {
 
     _tr.col = c_yellow;
 
-    show_debug_message("SHOT START:");
-    show_debug_message(string(_x1) + ", " + string(_y1) + ", " + string(_z1));
-
-    show_debug_message("SHOT END:");
-    show_debug_message(string(_x2) + ", " + string(_y2) + ", " + string(_z2));
 }   
 if (shoot_time > 0) {
-        shoot_time--;
+    shoot_time--;
+}
+
+if (keyboard_check_pressed(ord("R")) && ammo < ammo_max && reloading_time <= 0) {
+    reloading_time = reloading_interval;
+}
+
+if (reloading_time > 0) {
+    reloading_time--;
+
+    offset_y += 40;
+
+    if (reloading_time <= 0) {
+        ammo = ammo_max;
+    }
 }

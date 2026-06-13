@@ -53,6 +53,9 @@ function xy_blocks_player(_player, _px, _py) {
     if (player_rect_hits_instance(_player, _px, _py, obj_solid)) {
         return true;
     }
+    if (player_rect_hits_instance(_player, _px, _py, obj_enemy)) {
+        return true;
+    }
 
     // 2. Colisão lateral com plataformas 3D
     var _player_bottom = _player.z - _player.camera_height;
@@ -99,7 +102,54 @@ function xy_blocks_player(_player, _px, _py) {
     return false;
 }
 
+function get_step_up_z(_player, _px, _py) {
+    var _foot_z = _player.z - _player.camera_height;
+    var _best_step_z = _foot_z;
+
+    var _l = _px - _player.player_radius;
+    var _r = _px + _player.player_radius;
+    var _t = _py - _player.player_radius;
+    var _b = _py + _player.player_radius;
+
+    if (!_player.on_ground) {
+        return _player.z - _player.camera_height;
+    }
+
+    var _list = ds_list_create();
+
+    var _count = collision_rectangle_list(
+        _l, _t, _r, _b,
+        obj_platform,
+        false,
+        true,
+        _list,
+        false
+    );
+
+    for (var i = 0; i < _count; i++) {
+        var _plat = _list[| i];
+
+        var _plat_top = _plat.z + _plat.z_size;
+        var _diff = _plat_top - _foot_z;
+
+        // Só sobe se for acima do pé atual,
+        // e dentro da altura máxima de degrau.
+        if (_diff > 0 && _diff <= _player.step_height) {
+            if (_plat_top > _best_step_z) {
+                _best_step_z = _plat_top;
+            }
+        }
+    }
+
+    ds_list_destroy(_list);
+
+    return _best_step_z;
+}
 function move_player_3d(_player, _dx, _dy) {
+    if (_dx == 0 && _dy == 0) {
+        return;
+    }
+
     var _steps = ceil(max(abs(_dx), abs(_dy)));
 
     if (_steps < 1) {
@@ -110,20 +160,56 @@ function move_player_3d(_player, _dx, _dy) {
     var _sy = _dy / _steps;
 
     repeat (_steps) {
-        // X separado
-        if (!xy_blocks_player(_player, _player.x + _sx, _player.y)) {
-            _player.x += _sx;
+        // ---------------------
+        // Movimento X
+        // ---------------------
+        var _next_x = _player.x + _sx;
+
+        if (!xy_blocks_player(_player, _next_x, _player.y)) {
+            _player.x = _next_x;
         } else {
-            // zera só o eixo X, não trava o Y
-            _player.move_x = 0;
+            var _step_z = get_step_up_z(_player, _next_x, _player.y);
+            var _foot_z = _player.z - _player.camera_height;
+
+            if (_step_z > _foot_z) {
+                _player.z = _step_z + _player.camera_height;
+                _player.zspd = 0;
+                _player.on_ground = true;
+
+                if (!xy_blocks_player(_player, _next_x, _player.y)) {
+                    _player.x = _next_x;
+                } else {
+                    _player.move_x = 0;
+                }
+            } else {
+                _player.move_x = 0;
+            }
         }
 
-        // Y separado
-        if (!xy_blocks_player(_player, _player.x, _player.y + _sy)) {
-            _player.y += _sy;
+        // ---------------------
+        // Movimento Y
+        // ---------------------
+        var _next_y = _player.y + _sy;
+
+        if (!xy_blocks_player(_player, _player.x, _next_y)) {
+            _player.y = _next_y;
         } else {
-            // zera só o eixo Y, não trava o X
-            _player.move_y = 0;
+            var _step_z = get_step_up_z(_player, _player.x, _next_y);
+            var _foot_z = _player.z - _player.camera_height;
+
+            if (_step_z > _foot_z) {
+                _player.z = _step_z + _player.camera_height;
+                _player.zspd = 0;
+                _player.on_ground = true;
+
+                if (!xy_blocks_player(_player, _player.x, _next_y)) {
+                    _player.y = _next_y;
+                } else {
+                    _player.move_y = 0;
+                }
+            } else {
+                _player.move_y = 0;
+            }
         }
     }
 }

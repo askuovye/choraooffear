@@ -29,3 +29,13 @@ look_at_y = 0;
 look_at_z = 0;
 
 window_mouse_set_locked(true);
+// bobbing timer used by Step event
+bob_timer = 0;
+cam_bob_z = 0;
+cam_bob_target_z = 0;
+last_zspd = 0;
+cam_jump_bob_z = 0;
+cam_jump_bob_target_z = 0;
+
+landing_impact = 0;
+was_grounded = true;

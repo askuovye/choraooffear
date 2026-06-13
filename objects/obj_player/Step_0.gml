@@ -65,8 +65,6 @@ if (_foot_z <= _ground) {
 } else {
     on_ground = false;
 }
-
-move_player_3d(id, move_x, move_y);
 // Sair do jogasso
 if (keyboard_check(vk_escape)) {
     game_end();

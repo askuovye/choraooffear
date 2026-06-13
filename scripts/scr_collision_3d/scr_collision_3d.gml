@@ -53,6 +53,9 @@ function xy_blocks_player(_player, _px, _py) {
     if (player_rect_hits_instance(_player, _px, _py, obj_solid)) {
         return true;
     }
+    if (player_rect_hits_instance(_player, _px, _py, obj_enemy)) {
+        return true;
+    }
 
     // 2. Colisão lateral com plataformas 3D
     var _player_bottom = _player.z - _player.camera_height;

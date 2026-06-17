@@ -10,3 +10,6 @@ life = 3;
 max_life = life;
 
 col = c_yellow;
+
+damage = 1;
+

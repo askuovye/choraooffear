@@ -1,3 +1,11 @@
+enum EnemyState {
+    IDLE,
+    CHASE,
+    ATTACK,
+    HURT,
+    DEAD
+}
+
 function enemy_idle() {
     var _dist = point_distance(x, y, obj_player.x, obj_player.y);
 
@@ -8,6 +16,7 @@ function enemy_idle() {
 
 function enemy_chase() {
     var _dist = point_distance(x, y, obj_player.x, obj_player.y);
+    var _dir = point_direction(obj_player.x, obj_player.y, x, y);
 
     if (_dist > detect_range) {
         state = EnemyState.IDLE;
@@ -18,13 +27,10 @@ function enemy_chase() {
         state = EnemyState.ATTACK;
         exit;
     }
+    _move_x = lengthdir_x(move_speed, direction);
+    _move_y = lengthdir_y(move_speed, direction);
 
-    var _dir = point_direction(x, y, obj_player.x, obj_player.y);
-
-    x += lengthdir_x(move_speed, _dir);
-    y += lengthdir_y(move_speed, _dir);
-
-    image_angle = _dir;
+    direction = _dir - 180;
 }
 
 function enemy_attack() {
@@ -37,6 +43,8 @@ function enemy_attack() {
         attack_cooldown--;
         exit;
     }
+    _move_x = 0;
+    _move_y = 0;
     obj_player.hp -= 1;
 
     attack_cooldown = room_speed;

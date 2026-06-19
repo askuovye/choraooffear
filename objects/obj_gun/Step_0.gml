@@ -29,11 +29,19 @@ recoil_x = lerp(recoil_x, 0, 0.18);
 recoil_y = lerp(recoil_y, 0, 0.18);
 recoil_angle = lerp(recoil_angle, 0, 0.16);
 
+shake *= shake_decay;
+
 offset_x += shift_x + recoil_x;
 offset_y += shift_y + recoil_y;
 offset_angle = recoil_angle;
 
 //CHUMBO GROSSO
+if (mouse_check_button_pressed(mb_left) && ammo <= 0 && reloading_time <= 0) {
+    shake = max(shake, 8);
+
+    recoil_angle += random_range(-3, 3);
+} 
+
 if (mouse_check_button(mb_left) && shoot_time <= 0 && ammo > 0 && reloading_time <= 0) {
     
     if (!instance_exists(obj_cam)) {
@@ -59,6 +67,7 @@ if (mouse_check_button(mb_left) && shoot_time <= 0 && ammo > 0 && reloading_time
     recoil_x += random_range(-2, 2);
     recoil_y += 12;
     recoil_angle += random_range(-4, 4);   
+    shake = max(shake, 4);
 
     var _damage = 1;
 
@@ -99,6 +108,10 @@ if (shoot_time > 0) {
 
 if (keyboard_check_pressed(ord("R")) && ammo < ammo_max && reloading_time <= 0) {
     reloading_time = reloading_interval;
+}
+
+if (shake < 0.05) {
+    shake = 0;
 }
 
 if (reloading_time > 0) {

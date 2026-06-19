@@ -22,6 +22,11 @@ recoil_x = 0;
 recoil_y = 0;
 recoil_angle = 0;
 
+shake = 0;
+shake_amount = 5;
+shake_decay = 0.75;
+
+
 function shoot() {
     sprite_index = sprite_shoot;
     image_index = 0;

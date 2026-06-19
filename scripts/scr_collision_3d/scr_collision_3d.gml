@@ -213,3 +213,18 @@ function move_player_3d(_player, _dx, _dy) {
         }
     }
 }
+
+function line_get_z_at_point(_x1, _y1, _z1, _x2, _y2, _z2, _px, _py) {
+    var _total_dist = point_distance(_x1, _y1, _x2, _y2);
+    
+    if (_total_dist <= 0) {
+        return _z1;
+    }
+
+    var _hit_dist = point_distance(_x1, _y1, _px, _py);
+    var _t = _hit_dist / _total_dist;
+
+    _t = clamp(_t, 0, 1);
+
+    return lerp(_z1, _z2, _t);
+}

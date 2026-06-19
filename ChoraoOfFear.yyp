@@ -27,7 +27,10 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
   ],
-  "IncludedFiles": [],
+  "IncludedFiles": [
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"cat.vbm","CopyToMask":-1,"filePath":"datafiles/models",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"Naoya.vbm","CopyToMask":-1,"filePath":"datafiles/models",},
+  ],
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
@@ -42,6 +45,7 @@
     {"id":{"name":"spr_phone","path":"sprites/spr_phone/spr_phone.yy",},},
     {"id":{"name":"obj_bullet","path":"objects/obj_bullet/obj_bullet.yy",},},
     {"id":{"name":"obj_gun","path":"objects/obj_gun/obj_gun.yy",},},
+    {"id":{"name":"obj_naoya_model","path":"objects/obj_naoya_model/obj_naoya_model.yy",},},
     {"id":{"name":"obj_chud","path":"objects/obj_chud/obj_chud.yy",},},
     {"id":{"name":"spr_wall","path":"sprites/spr_wall/spr_wall.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
@@ -52,6 +56,7 @@
     {"id":{"name":"obj_platform","path":"objects/obj_platform/obj_platform.yy",},},
     {"id":{"name":"fnt_arial","path":"fonts/fnt_arial/fnt_arial.yy",},},
     {"id":{"name":"spr_enemy_left","path":"sprites/spr_enemy_left/spr_enemy_left.yy",},},
+    {"id":{"name":"obj_cat_model","path":"objects/obj_cat_model/obj_cat_model.yy",},},
     {"id":{"name":"DisplayCode","path":"scripts/DisplayCode/DisplayCode.yy",},},
     {"id":{"name":"spr_crosshair","path":"sprites/spr_crosshair/spr_crosshair.yy",},},
     {"id":{"name":"spr_floor","path":"sprites/spr_floor/spr_floor.yy",},},

@@ -1313,6 +1313,12 @@ function VBM_Model_CastRay(
 	return out_dist;
 }
 
+function __VBM_VertexSubmitRegion(vertex_buffer, primitive, texture, loop_start, loop_count) {
+	// Compatibility fallback for GameMaker runtimes that do not expose vertex_submit_ext().
+	// This submits the full buffer, so multi-mesh VBM files may need a newer runtime or split buffers.
+	vertex_submit(vertex_buffer, primitive, texture);
+}
+
 /// @desc Crude method to render all meshes in model
 /// @param {Struct.VBM_Model} model
 /// @param {Array<Real>} matrix
@@ -1400,7 +1406,7 @@ function VBM_Model_Submit(model, matrix, layermask=VBM_LAYERMASKALL, change_draw
 		}
 		
 		// Submit region of vertex buffer
-		vertex_submit_ext(
+		__VBM_VertexSubmitRegion(
 			model.vertex_buffer,
 			pr_trianglelist,
 			tex,
@@ -1424,7 +1430,7 @@ function VBM_Model_SubmitMesh(model, mesh_index, texture=VBM_SUBMIT_TEXDEFAULT) 
 	}
 	
 	// Submit region of vertex buffer
-	vertex_submit_ext(
+	__VBM_VertexSubmitRegion(
 		model.vertex_buffer,
 		pr_trianglelist,
 		texture,

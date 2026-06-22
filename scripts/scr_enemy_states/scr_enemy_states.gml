@@ -12,6 +12,15 @@ function enemy_idle() {
     if (_dist <= detect_range) {
         state = EnemyState.CHASE;
     }
+    var _dist = distance_to_object(obj_player);
+    _move_x = 0;
+    _move_y = 0;
+
+    direction += 4;
+
+    _move_x = lengthdir_x(move_speed, direction);
+    _move_y = lengthdir_y(move_speed, direction);
+
 }
 
 function enemy_chase() {
@@ -30,6 +39,7 @@ function enemy_chase() {
     _move_x = lengthdir_x(move_speed, direction);
     _move_y = lengthdir_y(move_speed, direction);
 
+    sprite_index = sprite_front;
     direction = _dir - 180;
 }
 
@@ -52,6 +62,9 @@ function enemy_attack() {
 
 function enemy_hurt() {
     hurt_timer--;
+
+    _move_x = 0;
+    _move_y = 0;
 
     if (hurt_timer <= 0) {
         state = EnemyState.CHASE;

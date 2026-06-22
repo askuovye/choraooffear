@@ -35,8 +35,6 @@ if (abs(_move_y) < abs(move_y)) {
 
 move_player_3d(id, move_x, move_y);
 
-//pulo do gato
-
 zspd += grav;
 
 if (keyboard_check_pressed(vk_space) && on_ground) {

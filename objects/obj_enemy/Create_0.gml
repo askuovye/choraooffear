@@ -7,6 +7,9 @@ sprite_left = 0;
 sprite_down = 0;
 sprite_dead = 0;
 
+_move_x = 0;
+_move_y = 0;
+
 move_speed = 0;	
 
 hp = 3;
@@ -22,8 +25,7 @@ hurt_timer = 0;
 
 function hit(_damage = 1) {
     hp -= _damage;
-    hp -= 1;
-    hurt_timer = 10;
+    hurt_timer = 60;
     state = EnemyState.HURT;
 
     if (hp <= 0) {

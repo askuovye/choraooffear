@@ -20,14 +20,7 @@ if (_angle_diff == 0) {
     sprite_index = sprite_down;
 }
  
-var _dist = distance_to_object(obj_player);
-var _move_x = 0;
-var _move_y = 0;
 
-direction += 4;
-
-_move_x = lengthdir_x(move_speed, direction);
-_move_y = lengthdir_y(move_speed, direction);
 
 if (!instance_exists(obj_player)) {
     exit;

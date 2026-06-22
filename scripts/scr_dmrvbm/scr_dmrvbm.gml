@@ -204,6 +204,51 @@ function vbm_mat4_identity_array_2d(n) {
 	return array_create_ext(n, matrix_build_identity);
 }
 
+function matrix_inverse(m) {
+	var a00 = m[0],  a01 = m[1],  a02 = m[2],  a03 = m[3];
+	var a10 = m[4],  a11 = m[5],  a12 = m[6],  a13 = m[7];
+	var a20 = m[8],  a21 = m[9],  a22 = m[10], a23 = m[11];
+	var a30 = m[12], a31 = m[13], a32 = m[14], a33 = m[15];
+
+	var b00 = a00 * a11 - a01 * a10;
+	var b01 = a00 * a12 - a02 * a10;
+	var b02 = a00 * a13 - a03 * a10;
+	var b03 = a01 * a12 - a02 * a11;
+	var b04 = a01 * a13 - a03 * a11;
+	var b05 = a02 * a13 - a03 * a12;
+	var b06 = a20 * a31 - a21 * a30;
+	var b07 = a20 * a32 - a22 * a30;
+	var b08 = a20 * a33 - a23 * a30;
+	var b09 = a21 * a32 - a22 * a31;
+	var b10 = a21 * a33 - a23 * a31;
+	var b11 = a22 * a33 - a23 * a32;
+
+	var det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+	if (det == 0) {
+		return matrix_build_identity();
+	}
+
+	det = 1 / det;
+	return [
+		(a11 * b11 - a12 * b10 + a13 * b09) * det,
+		(a02 * b10 - a01 * b11 - a03 * b09) * det,
+		(a31 * b05 - a32 * b04 + a33 * b03) * det,
+		(a22 * b04 - a21 * b05 - a23 * b03) * det,
+		(a12 * b08 - a10 * b11 - a13 * b07) * det,
+		(a00 * b11 - a02 * b08 + a03 * b07) * det,
+		(a32 * b02 - a30 * b05 - a33 * b01) * det,
+		(a20 * b05 - a22 * b02 + a23 * b01) * det,
+		(a10 * b10 - a11 * b08 + a13 * b06) * det,
+		(a01 * b08 - a00 * b10 - a03 * b06) * det,
+		(a30 * b04 - a31 * b02 + a33 * b00) * det,
+		(a21 * b02 - a20 * b04 - a23 * b00) * det,
+		(a11 * b07 - a10 * b09 - a12 * b06) * det,
+		(a00 * b09 - a01 * b07 + a02 * b06) * det,
+		(a31 * b01 - a30 * b03 - a32 * b00) * det,
+		(a20 * b03 - a21 * b01 + a22 * b00) * det
+	];
+}
+
 function vbm_mat4_compose(outmat4, outmat4_offset, x, y, z, qw, qx, qy, qz, sx, sy, sz) {
 	// M = T * R * S, Mat4Compose(loc, quat, scale):
     var xx = qx*qx, xy = qx*qy, xz = qx*qz, xw = qx*qw;
@@ -747,17 +792,36 @@ function VBM_ModelPrism_CastRay(prism, matprism, rx,ry,rz, dx,dy,dz, dist_start,
 		py = ry + dy * dist;
 		pz = rz + dz * dist;
 		
-		// Check if intersection.xy is in triangle.xy
-		if ( !point_in_triangle(	// Check collision in 2D space
-			px,
-			py,
-			tris[t+VBM_PRISMTRIANGLE.v0x],
-			tris[t+VBM_PRISMTRIANGLE.v0y],
-			tris[t+VBM_PRISMTRIANGLE.v1x],
-			tris[t+VBM_PRISMTRIANGLE.v1y],
-			tris[t+VBM_PRISMTRIANGLE.v2x],
-			tris[t+VBM_PRISMTRIANGLE.v2y]
-		) ) {
+		var hit_triangle = false;
+		var anx = abs(nx), any = abs(ny), anz = abs(nz);
+		
+		// Project onto the plane where the triangle has the largest area.
+		if (anz >= anx && anz >= any) {
+			hit_triangle = point_in_triangle(
+				px, py,
+				tris[t+VBM_PRISMTRIANGLE.v0x], tris[t+VBM_PRISMTRIANGLE.v0y],
+				tris[t+VBM_PRISMTRIANGLE.v1x], tris[t+VBM_PRISMTRIANGLE.v1y],
+				tris[t+VBM_PRISMTRIANGLE.v2x], tris[t+VBM_PRISMTRIANGLE.v2y]
+			);
+		}
+		else if (anx >= any) {
+			hit_triangle = point_in_triangle(
+				py, pz,
+				tris[t+VBM_PRISMTRIANGLE.v0y], tris[t+VBM_PRISMTRIANGLE.v0z],
+				tris[t+VBM_PRISMTRIANGLE.v1y], tris[t+VBM_PRISMTRIANGLE.v1z],
+				tris[t+VBM_PRISMTRIANGLE.v2y], tris[t+VBM_PRISMTRIANGLE.v2z]
+			);
+		}
+		else {
+			hit_triangle = point_in_triangle(
+				px, pz,
+				tris[t+VBM_PRISMTRIANGLE.v0x], tris[t+VBM_PRISMTRIANGLE.v0z],
+				tris[t+VBM_PRISMTRIANGLE.v1x], tris[t+VBM_PRISMTRIANGLE.v1z],
+				tris[t+VBM_PRISMTRIANGLE.v2x], tris[t+VBM_PRISMTRIANGLE.v2z]
+			);
+		}
+		
+		if ( !hit_triangle ) {
 			t += VBM_PRISMTRIANGLE._len;
 			continue;
 		}
@@ -768,9 +832,9 @@ function VBM_ModelPrism_CastRay(prism, matprism, rx,ry,rz, dx,dy,dz, dist_start,
 		
 		if ( !is_undefined(outintersection3) ) {
 			v = matrix_transform_vertex(matprism, px, py, pz);
-			outintersection3[@ 0] = px;
-			outintersection3[@ 1] = py;
-			outintersection3[@ 2] = pz;
+			outintersection3[@ 0] = v[0];
+			outintersection3[@ 1] = v[1];
+			outintersection3[@ 2] = v[2];
 		}
 		if ( !is_undefined(outnormal3) ) {
 			outnormal3[@ 0] = nx;
@@ -2287,6 +2351,11 @@ function VBM_Model_Load(outvbm, file_buffer, file_buffer_offset, file_buffer_siz
 			var format_mask = buffer_read(f, buffer_s32);
 			var buffer_size = buffer_read(f, buffer_u32);
 			var stride = VBM_FormatStride(format_mask);
+			if (buffer_size <= 0 || stride <= 0) {
+				show_debug_message("VBM_Model_Open(): empty vertex buffer, loading non-render chunks only");
+				buffer_seek(f, buffer_seek_start, chunk_jump);
+				continue;
+			}
 			
 			outvbm.format_mask = format_mask;
 			outvbm.vertex_format = VBM_FormatBuild(format_mask);

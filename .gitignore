@@ -52,6 +52,7 @@ crash.log
 # IDE / editor
 .vscode/
 .cursor/
+.codex/
 .idea/
 
 # OS files

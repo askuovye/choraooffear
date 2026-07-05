@@ -5,6 +5,10 @@ if (!instance_exists(obj_player)){
     exit;
 }
 
+if (global.game_paused) {
+    exit;
+}
+
 var _dir = point_direction(obj_player.x, obj_player.y, x, y);
 var _angle_diff = angle_difference(_dir, direction);
 _angle_diff /= 90;

@@ -2,6 +2,10 @@ if (!instance_exists(obj_cam)) {
     exit;
 }
 
+if (global.game_paused) {
+    exit;
+}
+
 var _direction = obj_cam.direction;
 
 // movimento sexo
@@ -67,3 +71,4 @@ if (_foot_z <= _ground) {
 if (keyboard_check(vk_escape)) {
     game_end();
 }
+

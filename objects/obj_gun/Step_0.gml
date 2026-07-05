@@ -5,6 +5,10 @@ if (!instance_exists(obj_player)) {
     exit;
 }
 
+if (global.game_paused) {
+    exit;
+}
+
 var _spd = point_distance(0, 0, obj_player.move_x, obj_player.move_y) / obj_player.move_speed;
 var _sinewave = sin(current_time / 100);
 var _offset_x = _sinewave * _spd * 10;

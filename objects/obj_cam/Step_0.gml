@@ -2,6 +2,10 @@ if (!instance_exists(obj_player)) {
     exit;
 }
 
+if (global.game_paused) {
+    exit;
+}
+
 var _mx = window_mouse_get_delta_x();
 var _my = window_mouse_get_delta_y();
 

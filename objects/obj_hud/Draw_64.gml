@@ -28,7 +28,7 @@ draw_set_valign(fa_top);
 
 if (_player != noone && _gun != noone) {
     draw_text(_draw_x + 75, _draw_y - 120, "vida: " + string(_player.hp));
-    draw_text(_draw_x + 70, _draw_y - 90, "ammo: " + string(_gun.ammo));
+    draw_text(_draw_x + 70, _draw_y - 90, "ammo: " + string(_gun.ammo_in_mag));
 }
 
 

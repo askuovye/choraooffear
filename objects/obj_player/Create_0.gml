@@ -40,6 +40,8 @@ if (!instance_exists(obj_cam)) {
 
 // armado e preparado
 inventory = instance_create_depth(0, 0, 0, obj_inventory_manager);
+dialogue = instance_create_depth(0, 0, 0, obj_dialogue_controller);
 gun = instance_create_depth(0, 0, 0, obj_gun);
 hud = instance_create_depth(0, 0, 0, obj_hud);
 crosshair = instance_create_depth(0, 0, 0, obj_crosshair);
+

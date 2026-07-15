@@ -8,7 +8,7 @@ shoot_time = 0;
 reloading_time = 0;
 reloading_interval = 120;
 
-ammo = 12;
+ammo_in_mag = 12;
 ammo_max = 12;
 
 offset_x = 0;

@@ -265,6 +265,18 @@ function inventory(_cols = 10, _rows = 6) constructor {
         return false;
     }
 
+    function inventory_get_amount(_name) {
+        var _total = 0;
+
+        for (var i = 0; i < array_length(_inventory_items); i++) {
+            if (_inventory_items[i].name == _name) {
+                _total += _inventory_items[i].amount;
+            }
+        }
+
+        return _total;
+    }
+
     function inventory_get_items() {
         return _inventory_items;
     }

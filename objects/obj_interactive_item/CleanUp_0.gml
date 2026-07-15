@@ -16,6 +16,10 @@ if (variable_instance_exists(id, "vbm") && is_struct(vbm)) {
 	delete vbm;
 }
 
+if (variable_instance_exists(id, "inspect_surface") && surface_exists(inspect_surface)) {
+	surface_free(inspect_surface);
+}
+
 
 
 

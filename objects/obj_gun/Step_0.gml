@@ -40,13 +40,13 @@ offset_y += shift_y + recoil_y;
 offset_angle = recoil_angle;
 
 //CHUMBO GROSSO
-if (mouse_check_button_pressed(mb_left) && ammo <= 0 && reloading_time <= 0) {
+if (mouse_check_button_pressed(mb_left) && ammo_in_mag <= 0 && reloading_time <= 0) {
     shake = max(shake, 8);
 
     recoil_angle += random_range(-3, 3);
 } 
 
-if (mouse_check_button(mb_left) && shoot_time <= 0 && ammo > 0 && reloading_time <= 0) {
+if (mouse_check_button(mb_left) && shoot_time <= 0 && ammo_in_mag > 0 && reloading_time <= 0) {
     
     if (!instance_exists(obj_cam)) {
         exit;
@@ -66,7 +66,7 @@ if (mouse_check_button(mb_left) && shoot_time <= 0 && ammo > 0 && reloading_time
 
     shoot();
     shoot_time = shoot_interval;
-    ammo--;
+    ammo_in_mag--;
 
     recoil_x += random_range(-2, 2);
     recoil_y += 12;
@@ -110,8 +110,18 @@ if (shoot_time > 0) {
     shoot_time--;
 }
 
-if (keyboard_check_pressed(ord("R")) && ammo < ammo_max && reloading_time <= 0) {
-    reloading_time = reloading_interval;
+if (keyboard_check_pressed(ord("R")) && ammo_in_mag < ammo_max && reloading_time <= 0) {
+
+    var _need = ammo_max - ammo_in_mag;
+    var _available = obj_inventory_manager.inv.inventory_get_amount("Handgun Ammo");
+    var _take = min(_need, _available);
+
+    if (_take > 0) {
+        obj_inventory_manager.inv.inventory_subtract_item("Handgun Ammo", _take);
+        ammo_in_mag += _take;
+        
+        reloading_time = reloading_interval;
+    }
 }
 
 if (shake < 0.05) {
@@ -124,6 +134,6 @@ if (reloading_time > 0) {
     offset_y += 40;
 
     if (reloading_time <= 0) {
-        ammo = ammo_max;
+        ammo_in_mag = ammo_max;
     }
 }
